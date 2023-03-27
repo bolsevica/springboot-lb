@@ -13,8 +13,6 @@ git 'https://github.com/bolsevica/springboot-lb.git'
 }
 stage('Compile') {
 steps {
- sh 'gradle init'
-sh 'gradle wrapper'
 sh './gradlew build -x test'
  sh 'pwd'
   sh 'ls -lah'
