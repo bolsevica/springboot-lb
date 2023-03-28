@@ -8,7 +8,7 @@ agent{ label 'jenkins-slave' }
 stages {
 stage('Cloning Git') {
 steps {
-git 'https://github.com/bolsevica/springboot-lb.git'
+git branch: "${env.BRANCH_NAME}", url: "${env.REPO_URL}"
 }
 }
 stage('Compile') {
