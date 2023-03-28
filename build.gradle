@@ -20,7 +20,7 @@ dependencies {
 
 jar {
 	manifest {
-		attributes 'Main-Class': 'fully.qualified.MainClass'
+		attributes 'Main-Class': 'DemoApplication'
 	}
 }
 
