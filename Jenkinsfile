@@ -9,6 +9,7 @@ stages {
 
 stage('Compile') {
 steps {
+  sh 'chmod +x gradlew'
 sh './gradlew build -x test'
  sh 'pwd'
   sh 'ls -lah'
@@ -16,7 +17,6 @@ sh './gradlew build -x test'
 }
 stage('Test') {
 steps {
- sh 'chmod +x gradlew'
 sh './gradlew test'
  sh 'pwd'
   sh 'ls -lah'
