@@ -6,12 +6,7 @@ dockerImage = ''
 }
 agent{ label 'jenkins-slave' }
 stages {
-stage('Cloning Git') {
-steps {
-sh 'pwd'
-git branch: "main", url: "${env.REPO_URL}"
-}
-}
+
 stage('Compile') {
 steps {
 sh './gradlew build -x test'
