@@ -4,16 +4,12 @@ registry = "bolsevica/springboot"
 registryCredential = 'jenkins-dockerhub'
 dockerImage = ''
 }
-agent any
+agent{ label 'jenkins-slave' }
 stages {
-stage('Cloning Git') {
-steps {
-git 'https://github.com/bolsevica/springboot-lb.git'
-}
-}
+
 stage('Compile') {
 steps {
-sh 'gradle wrapper'
+  sh 'chmod +x gradlew'
 sh './gradlew build -x test'
  sh 'pwd'
   sh 'ls -lah'
@@ -21,7 +17,7 @@ sh './gradlew build -x test'
 }
 stage('Test') {
 steps {
-sh './gradlew build -x test'
+sh './gradlew test'
  sh 'pwd'
   sh 'ls -lah'
 }
