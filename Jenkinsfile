@@ -8,7 +8,8 @@ agent{ label 'jenkins-slave' }
 stages {
 stage('Cloning Git') {
 steps {
-git branch: "origin/main", url: "${env.REPO_URL}"
+sh 'pwd'
+git branch: "main", url: "${env.REPO_URL}"
 }
 }
 stage('Compile') {
@@ -20,7 +21,7 @@ sh './gradlew build -x test'
 }
 stage('Test') {
 steps {
-sh './gradlew build -x test'
+sh './gradlew test'
  sh 'pwd'
   sh 'ls -lah'
 }
