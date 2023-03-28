@@ -8,7 +8,7 @@ agent{ label 'jenkins-slave' }
 stages {
 stage('Cloning Git') {
 steps {
-git branch: "${env.BRANCH_NAME}", url: "${env.REPO_URL}"
+git branch: "origin/main", url: "${env.REPO_URL}"
 }
 }
 stage('Compile') {
