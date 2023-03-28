@@ -4,7 +4,7 @@ registry = "bolsevica/springboot"
 registryCredential = 'jenkins-dockerhub'
 dockerImage = ''
 }
-agent any
+agent{ label 'jenkins-slave' }
 stages {
 stage('Cloning Git') {
 steps {
