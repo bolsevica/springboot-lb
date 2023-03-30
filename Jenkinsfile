@@ -7,7 +7,7 @@ dockerImage = ''
 agent{ label 'jenkins-slave' }
 stages {
 
-stage('Compile') {
+stage('Build') {
 steps {
   sh 'chmod +x gradlew'
 sh './gradlew build -x test'
@@ -15,17 +15,23 @@ sh './gradlew build -x test'
   sh 'ls -lah'
 }
 }
+boolean testPassed = true
 stage('Test') {
 steps {
-sh './gradlew test'
- sh 'pwd'
-  sh 'ls -lah'
+  try{
+        sh './gradlew test'
+    }catch (Exception e){
+        testPassed = false
+    }
+   junit 'build/reports/**/*.xml'
 }
 }
 stage('Building image') {
+  if(testPassed){
 steps{
 script {
 dockerImage = docker.build registry + ":$BUILD_NUMBER"
+}
 }
 }
 }
@@ -45,10 +51,10 @@ dockerImage.run('-p 8081:8083')
 }
 }
 }
-//stage('Cleaning up') {
-//steps{
-//sh "docker rmi $registry:$BUILD_NUMBER"
-//}
-//}
+stage('Cleaning up') {
+steps{
+sh "docker rmi $registry:$BUILD_NUMBER"
+}
+}
 }
 }
