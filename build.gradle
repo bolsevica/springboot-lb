@@ -18,11 +18,6 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-jar {
-	manifest {
-		attributes 'com.example.demo.DemoApplication'
-	}
-}
 
 tasks.named('test') {
 	useJUnitPlatform()
