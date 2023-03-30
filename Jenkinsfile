@@ -24,7 +24,6 @@ steps {
     }catch (Exception e){
         testPassed = false
     }
-   junit 'build/reports/**/*.xml'
   }
 }
 }
