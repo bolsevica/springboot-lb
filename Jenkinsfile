@@ -3,6 +3,7 @@ environment {
 registry = "bolsevica/springboot"
 registryCredential = 'jenkins-dockerhub'
 dockerImage = ''
+testPassed = 'true' 
 }
 agent{ label 'jenkins-slave' }
 stages {
@@ -15,21 +16,22 @@ sh './gradlew build -x test'
   sh 'ls -lah'
 }
 }
-boolean testPassed = true
 stage('Test') {
 steps {
-  try{
+  script{
+     try{
         sh './gradlew test'
     }catch (Exception e){
         testPassed = false
     }
    junit 'build/reports/**/*.xml'
+  }
 }
 }
 stage('Building image') {
-  if(testPassed){
 steps{
 script {
+   if(testPassed){
 dockerImage = docker.build registry + ":$BUILD_NUMBER"
 }
 }
