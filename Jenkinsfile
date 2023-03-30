@@ -27,7 +27,7 @@ steps {
   }
 }
 }
-stage('Building image') {
+stage('Building Docker image') {
 steps{
 script {
    if(testPassed){
@@ -36,19 +36,26 @@ dockerImage = docker.build registry + ":$BUILD_NUMBER"
 }
 }
 }
-stage('Deploy our image') {
+stage('Run image') {
+steps{
+script {
+dockerImage.run('-p 8081:8083')
+}
+}
+}
+stage('Perform automated API tests') {
+steps{
+script {
+build job: 'API tests'
+}
+}
+}
+stage('Deploy our image to DockerHub') {
 steps{
 script {
 docker.withRegistry( '', registryCredential ) {
 dockerImage.push()
 }
-}
-}
-}
-stage('Run image') {
-steps{
-script {
-dockerImage.run('-p 8081:8083')
 }
 }
 }
